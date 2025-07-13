@@ -1,0 +1,770 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>From Hurt to Hope</title>
+
+  <!-- CSS Libraries -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+  <style>
+  /* All CSS combined here */
+/* Dark/Light Theme Transitions */
+body[data-theme='dark'] {
+  background-color: #111;
+  color: #fff;
+  transition: background-color .5s, color .5s;
+}
+body[data-theme='light'] {
+  background-color: #fff;
+  color: #111;
+  transition: background-color .5s, color .5s;
+}
+
+/* Theme Toggle Icon & Animation */
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  cursor: pointer;
+}
+.rotate-icon {
+  animation: rotateIcon 0.6s ease-in-out;
+}
+@keyframes rotateIcon {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(180deg); }
+}
+
+/* Hero Glassmorphism */
+.hero-dark {
+  height: 100vh;
+  background: linear-gradient(145deg,#121212,#1e1e1e);
+  position: relative;
+  text-shadow: 0 1px 3px rgba(0,0,0,.6);
+}
+
+/* Buttons */
+.neumorphic-btn {
+  background: rgba(255,255,255,.05);
+  border-radius: 40px;
+  padding: 12px 28px;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.2);
+  backdrop-filter: blur(6px);
+  box-shadow:5px 5px 15px #0d0d0d,-5px -5px 15px #2e2e2e;
+  transition: transform .3s, box-shadow .3s;
+}
+.neumorphic-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:0 0 12px rgba(255,255,255,.3);
+}
+.glow-btn {
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% { box-shadow:0 0 10px #fff; }
+  50% { box-shadow:0 0 25px #f0c; }
+  100% { box-shadow:0 0 10px #fff; }
+}
+
+/* Sections */
+.dark-bg {
+  background: linear-gradient(to right,#1f1f1f,#2d2d2d);
+}
+.impact-section {
+  background: linear-gradient(145deg,#1c1c1c,#2b2b2b);
+}
+
+/* Icon Cards */
+.icon-card-dark {
+  background: rgba(255,255,255,.05);
+  padding:20px;
+  border-radius:20px;
+  backdrop-filter:blur(5px);
+  transition:transform .3s,box-shadow .3s;
+}
+.icon-card-dark:hover {
+  transform:translateY(-8px);
+  box-shadow:0 10px 20px rgba(0,0,0,.4);
+}
+.icon-hover:hover {
+  transform:scale(1.2);
+  filter:drop-shadow(0 0 10px rgba(255,255,255,.4));
+}
+
+/* Cycle of Hurt */
+.cycle-step {
+  cursor:pointer;
+  transition:transform .3s;
+}
+.cycle-step:hover { transform:scale(1.1); }
+.cycle-step.active .cycle-icon { color:#ffc107; }
+.cycle-connector { font-size:1.5rem; margin-top:2rem; }
+
+/* Carousel Avatars */
+.carousel-inner img {
+  border:3px solid #fff;
+}
+
+/* Footer Animation */
+footer {
+  animation: fadeInUp 1.5s ease-out;
+}
+@keyframes fadeInUp {
+  0% { opacity:0; transform:translateY(20px); }
+  100% { opacity:1; transform:translateY(0); }
+}
+
+/* Glowing Title */
+.gsap-glow {
+  font-weight:700;
+  letter-spacing:1px;
+}
+.recovery-card {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  backdrop-filter: blur(4px);
+}
+.recovery-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+[data-theme='dark'] .recovery-card {
+  background: rgba(30, 30, 30, 0.85);
+  color: #fff;
+}
+.story-card {
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  max-width: 600px;
+  margin: auto;
+}
+.story-avatar {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 0 15px rgba(255,255,255,0.3);
+}
+#stories .carousel-item {
+  transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  padding: 10px;
+}
+/* 🌿 Timeline Base */
+.timeline {
+  position: relative;
+  max-width: 900px;
+  margin: auto;
+  padding: 20px 0;
+}
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  background-color: #ffc107;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -2px;
+}
+
+/* 📌 Timeline Items */
+.timeline-item {
+  padding: 10px 40px;
+  position: relative;
+  width: 50%;
+}
+.timeline-item.left {
+  left: 0;
+}
+.timeline-item.right {
+  left: 50%;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  width: 20px;
+  height: 20px;
+  background-color: #ffc107;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  z-index: 1;
+}
+.timeline-item.left::before {
+  right: -10px;
+}
+.timeline-item.right::before {
+  left: -10px;
+}
+
+/* 💬 Timeline Content */
+.timeline-content {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 10px rgba(255, 193, 7, 0.2);
+}
+.timeline-content h5 {
+  font-weight: bold;
+  color: #ffc107;
+}
+.timeline-content p {
+  margin: 0;
+}
+
+/* 📱 Responsive Mobile View */
+@media screen and (max-width: 768px) {
+  .timeline::after {
+    left: 8px;
+  }
+  .timeline-item {
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 15px;
+    margin-bottom: 40px;
+  }
+  .timeline-item.right {
+    left: 0;
+  }
+  .timeline-item::before {
+    left: 0;
+  }
+}
+/* 🧠 Quotes Carousel Avatar Styling */
+#quotes-wall .avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ffc107;
+  box-shadow: 0 0 15px rgba(255, 193, 7, 0.3);
+}
+
+/* 🌟 Quote Block Styling */
+#quotes-wall blockquote {
+  font-style: italic;
+  color: #f8f9fa;
+  max-width: 700px;
+  margin: auto;
+  text-shadow: 0 0 5px rgba(255,255,255,0.1);
+  line-height: 1.6;
+}
+.carousel-item {
+  transition: opacity 1s ease-in-out;
+}
+
+/* 🎯 Carousel Controls */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-size: 100% 100%;
+  filter: invert(1);
+}
+/* 🔹 Hero-Only Navbar Styling */
+/* 🌟 Floating Hero Navbar with Glass & Glow */
+.hero-navbar {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 40px;
+  padding: 10px 30px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.05), 0 8px 24px rgba(0,0,0,0.25);
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  overflow-x: auto;
+  white-space: nowrap;
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: all 0.4s ease;
+  animation: fadeInDown 1s ease-in-out;
+}
+
+/* 🔥 Glow link styles */
+.hero-navbar a {
+  color: #ffffffcc;
+  font-weight: 600;
+  font-family: 'Segoe UI', sans-serif;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  padding: 8px 14px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* ✨ Neon hover underline */
+.hero-navbar a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(90deg, #00f2fe, #4facfe);
+  transition: transform 0.3s ease;
+}
+.hero-navbar a:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+.hero-navbar a:hover {
+  color: #ffffff;
+}
+
+/* 🧊 Hide nav after hero scroll */
+.hero-navbar.hidden {
+  opacity: 0;
+  transform: translate(-50%, -20px);
+  pointer-events: none;
+}
+
+/* 💨 Smooth slide on load */
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+}
+
+  </style>
+</head>
+<body>
+
+<!-- HTML body content already sent will be reused as is -->
+<Insert HTML body content you pasted earlier>
+<!-- Theme Toggle with Animated Icon -->
+<div class="theme-toggle">
+  <i class="fas fa-moon fa-2x" id="themeToggle"></i>
+</div>
+
+<!-- 1. HERO SECTION -->
+<header class="hero-dark d-flex align-items-center justify-content-center text-white text-center" id="hero">
+ <!-- Hero Navigation (only visible in hero) -->
+<nav class="hero-navbar" id="heroNav">
+  <a href="#addiction">Addiction</a>
+  <a href="#cycle">Cycle</a>
+  <a href="#recovery">Hope</a>
+  <a href="#stories">Stories</a>
+  <a href="#timeline">Timeline</a>
+  <a href="#quotes-wall">Quotes</a>
+  <a href="#support">Support</a>
+  <a href="#facts">Facts</a>
+</nav>
+
+  
+  
+  
+  <div class="container" data-aos="zoom-in">
+    <h1 class="display-4 fw-bold gsap-glow">From Hurt to Hope</h1>
+    <p class="lead">Rebuilding Lives Beyond Addiction</p>
+    <a href="#support" class="btn neumorphic-btn glow-btn mt-4">Get Support Now</a>
+  </div>
+</header>
+
+<!-- 2. ADDICTION INFO -->
+<section class="py-5" id="addiction">
+  <div class="container" data-aos="fade-up">
+    <h2 class="text-center mb-4">What is Addiction?</h2>
+    <p class="text-center mx-auto mb-5 fs-5" style="max-width:800px;">
+      <strong>Addiction</strong> is a chronic brain disorder… with the right help, recovery is possible.
+    </p>
+  </div>
+  <div class="impact-section text-white py-5">
+    <div class="container" data-aos="fade-up">
+      <div class="row text-center g-4">
+        <div class="col-md-3 icon-card-dark">
+          <i class="fas fa-brain fa-3x text-primary icon-hover"></i>
+          <h5 class="mt-3">Psychological Impact</h5>
+          <p>Obsessions, anxiety, mental health decline</p>
+        </div>
+        <div class="col-md-3 icon-card-dark">
+          <i class="fas fa-heartbeat fa-3x text-danger icon-hover"></i>
+          <h5 class="mt-3">Physical Effects</h5>
+          <p>Fatigue, organ damage, withdrawal symptoms</p>
+        </div>
+        <div class="col-md-3 icon-card-dark">
+          <i class="fas fa-user-slash fa-3x text-warning icon-hover"></i>
+          <h5 class="mt-3">Social Consequences</h5>
+          <p>Broken bonds, isolation, trust issues</p>
+        </div>
+        <div class="col-md-3 icon-card-dark">
+          <i class="fas fa-wallet fa-3x text-success icon-hover"></i>
+          <h5 class="mt-3">Economic Loss</h5>
+          <p>Debt, job instability, financial struggle</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. CYCLE OF HURT -->
+<section class="py-5 dark-bg text-white" id="cycle">
+  <div class="container" data-aos="fade-left">
+    <h2 class="text-center mb-5">The Cycle of Hurt</h2>
+    <div class="row text-center g-4 justify-content-center align-items-center">
+      <!-- Steps with connectors -->
+      <div class="col-auto cycle-step" data-step="curiosity">
+        <i class="fas fa-vial fa-2x cycle-icon" title="Curiosity"></i><p>Curiosity</p>
+      </div>
+      <div class="col-auto cycle-connector"><i class="fas fa-arrow-right text-warning"></i></div>
+      <div class="col-auto cycle-step" data-step="dependence">
+        <i class="fas fa-prescription-bottle-alt fa-2x cycle-icon" title="Dependence"></i><p>Dependence</p>
+      </div>
+      <div class="col-auto cycle-connector"><i class="fas fa-arrow-right text-warning"></i></div>
+      <div class="col-auto cycle-step" data-step="isolation">
+        <i class="fas fa-user-lock fa-2x cycle-icon" title="Isolation"></i><p>Isolation</p>
+      </div>
+      <div class="col-auto cycle-connector"><i class="fas fa-arrow-right text-warning"></i></div>
+      <div class="col-auto cycle-step" data-step="breakdown">
+        <i class="fas fa-skull-crossbones fa-2x cycle-icon" title="Breakdown"></i><p>Breakdown</p>
+      </div>
+      <div class="col-auto cycle-connector"><i class="fas fa-arrow-right text-warning"></i></div>
+      <div class="col-auto cycle-step" data-step="realization">
+        <i class="fas fa-eye fa-2x cycle-icon" title="Realization"></i><p>Realization</p>
+      </div>
+    </div>
+    <div class="mt-4" id="cycleDetail" style="display:none">
+      <div id="cycleText"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. QUOTE BLOCK -->
+<section class="py-5" style="background:url('images/light-path.png')center/cover;">
+  <div class="container text-white text-center" data-aos="zoom-in">
+    <blockquote class="blockquote">
+      <p class="fs-4">“Change begins with a single moment of clarity.”</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- 5. STAGES -->
+<!-- 5. STAGES OF RECOVERY (Enhanced as Cards) -->
+<section class="py-5 bg-light" id="recovery">
+  <div class="container" data-aos="fade-right">
+    <h2 class="text-center mb-5">The Journey to Hope</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+      
+      <!-- Card 1: Acknowledgement -->
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0 recovery-card">
+          <div class="card-body text-center">
+            <i class="fas fa-exclamation-circle fa-2x mb-3 text-warning"></i>
+            <h5 class="card-title">Acknowledgement</h5>
+            <p class="card-text">
+              The first step is recognizing the problem. Denial fades, and acceptance begins the path to healing.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Seeking Help -->
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0 recovery-card">
+          <div class="card-body text-center">
+            <i class="fas fa-hand-holding-heart fa-2x mb-3 text-danger"></i>
+            <h5 class="card-title">Seeking Help</h5>
+            <p class="card-text">
+              Professional support, therapy, or speaking to loved ones becomes a lifeline to break free from addiction.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Community Healing -->
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0 recovery-card">
+          <div class="card-body text-center">
+            <i class="fas fa-users fa-2x mb-3 text-primary"></i>
+            <h5 class="card-title">Community Healing</h5>
+            <p class="card-text">
+              Being part of a community that understands, supports, and uplifts creates a foundation for long-term recovery.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Rebuilding -->
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0 recovery-card">
+          <div class="card-body text-center">
+            <i class="fas fa-seedling fa-2x mb-3 text-success"></i>
+            <h5 class="card-title">Rebuilding</h5>
+            <p class="card-text">
+              Life is gradually restored — with new purpose, relationships, and strength to face challenges with clarity.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 6. SUCCESS STORIES (Enhanced Carousel) -->
+<section class="py-5 bg-dark text-white" id="stories">
+  <div class="container" data-aos="fade-up">
+    <h2 class="text-center mb-5">Real Stories</h2>
+
+    <div id="storyCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+
+        <!-- Story 1 -->
+        <div class="carousel-item active">
+          <div class="story-card text-center">
+          
+            <blockquote class="blockquote">
+              <p class="fs-5">"My daughter didn’t just recover — she found her purpose again."</p>
+            </blockquote>
+            <footer class="blockquote-footer text-white-50">A Parent</footer>
+          </div>
+        </div>
+
+        <!-- Story 2 -->
+        <div class="carousel-item">
+          <div class="story-card text-center">
+            
+            <blockquote class="blockquote">
+              <p class="fs-5">"Today I’m sober and running a startup. It’s never too late."</p>
+            </blockquote>
+            <footer class="blockquote-footer text-white-50">Former Addict</footer>
+          </div>
+        </div>
+
+        <!-- Story 3 -->
+        <div class="carousel-item">
+          <div class="story-card text-center">
+            
+            <blockquote class="blockquote">
+              <p class="fs-5">"Community support saved my life. Now, I help others walk this path."</p>
+            </blockquote>
+            <footer class="blockquote-footer text-white-50">Community Leader</footer>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#storyCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#storyCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<!-- 7. RESOURCES -->
+<section class="py-5 bg-light" id="support">
+  <div class="container" data-aos="fade-up">
+    <h2 class="text-center mb-4">Support & Resources</h2>
+    <ul class="list-group text-center mx-auto" style="max-width:600px">
+      <li class="list-group-item"><i class="fas fa-phone"></i> National Helpline: 1800‑11‑0031</li>
+
+      <li class="list-group-item"><i class="fas fa-podcast"></i> Mental health podcasts</li>
+    </ul>
+  </div>
+</section>
+
+
+
+<!-- Timeline of Recovery Section -->
+<section class="py-5 bg-dark text-white" id="timeline">
+  <div class="container" data-aos="fade-up">
+    <h2 class="text-center mb-4">Timeline of Recovery</h2>
+    <div class="timeline">
+      <div class="timeline-item left">
+        <div class="timeline-content">
+          <h5>Stage 1: Realization</h5>
+          <p>The moment when one acknowledges their struggle.</p>
+        </div>
+      </div>
+      <div class="timeline-item right">
+        <div class="timeline-content">
+          <h5>Stage 2: Detox & Withdrawal</h5>
+          <p>Managing physical symptoms under supervision.</p>
+        </div>
+      </div>
+      <div class="timeline-item left">
+        <div class="timeline-content">
+          <h5>Stage 3: Therapy & Support</h5>
+          <p>Counseling, group sessions, and emotional healing.</p>
+        </div>
+      </div>
+      <div class="timeline-item right">
+        <div class="timeline-content">
+          <h5>Stage 4: Rebuilding Life</h5>
+          <p>Setting new goals, mending relationships, finding purpose.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="py-5 dark-bg text-white" id="quotes-wall">
+  <div class="container" data-aos="zoom-in">
+    <h2 class="text-center mb-5">Words That Heal</h2>
+    
+    <div id="quoteCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner text-center">
+
+        <div class="carousel-item active">
+          
+          <blockquote class="blockquote fs-5 px-3">“Recovery is not a race. You don’t have to feel guilty if it takes you longer than you thought it would.”</blockquote>
+        </div>
+
+        <div class="carousel-item">
+          
+          <blockquote class="blockquote fs-5 px-3">“The opposite of addiction is not sobriety — it's connection.”</blockquote>
+        </div>
+
+        <div class="carousel-item">
+          
+          <blockquote class="blockquote fs-5 px-3">“Even the darkest night will end and the sun will rise.”</blockquote>
+        </div>
+
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#quoteCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+
+      <button class="carousel-control-next" type="button" data-bs-target="#quoteCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- 9. FACTS -->
+<section class="py-5 bg-light text-center" id="facts">
+  <div class="container" data-aos="fade-up">
+    <h2 class="mb-4">Did You Know?</h2>
+    <div class="row g-4">
+      <div class="col-md-4"><h3 class="count" data-count="35000000">2700000</h3><p>People suffer globally</p></div>
+      <div class="col-md-4"><h3 class="count" data-count="70">40</h3><p>% relapse without support</p></div>
+      <div class="col-md-4"><h3 class="count" data-count="89">20</h3><p>% recovery</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. FOOTER -->
+<footer class="text-center bg-dark text-white py-4">
+  <p>&copy; 2025 From Hurt to Hope. 💙 Made with care</p>
+</footer>
+<!-- JS Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.7/countUp.min.js"></script>
+
+<script>
+// All JavaScript combined here
+// AOS init
+AOS.init();
+
+// GSAP Glowing Title effect
+gsap.to(".gsap-glow", {
+  textShadow: "0px 0px 20px #fff",
+  repeat: -1,
+  yoyo: true,
+  duration: 2
+});
+
+// Animated count up on "Did You Know?"
+document.querySelectorAll('.count').forEach((el, i) => {
+  const endVal = el.getAttribute('data-count');
+  const countUp = new CountUp(el, endVal, { duration: 2 + i });
+  if (!countUp.error) {
+    setTimeout(() => {
+      el.classList.add('aos-init','aos-animate');
+      countUp.start();
+    }, 300 * i);
+  }
+});
+
+// Theme toggle with rotation animation
+const toggleBtn = document.getElementById("themeToggle");
+toggleBtn.onclick = () => {
+  const html = document.documentElement;
+  const current = html.getAttribute("data-theme");
+  const next = current === "light" ? "dark" : "light";
+  html.setAttribute("data-theme", next);
+  toggleBtn.classList.toggle("fa-sun");
+  toggleBtn.classList.toggle("fa-moon");
+  toggleBtn.classList.add('rotate-icon');
+  setTimeout(() => toggleBtn.classList.remove('rotate-icon'), 600);
+};
+
+// Interactive Cycle of Hurt
+const cycleData = {
+  curiosity: "Curiosity starts innocently—seeking escape or novelty.",
+  dependence: "Repeated use reshapes the brain to rely on the substance.",
+  isolation: "Behavior becomes hidden; relationships suffer.",
+  breakdown: "Health, finances, and stability begin to collapse.",
+  realization: "An awakening moment that sparks recovery."
+};
+
+document.querySelectorAll('.cycle-step').forEach(step => {
+  step.addEventListener('click', () => {
+    const key = step.getAttribute('data-step');
+    const box = document.getElementById('cycleDetail');
+    const text = document.getElementById('cycleText');
+
+    document.querySelectorAll('.cycle-step').forEach(s => s.classList.remove('active'));
+    step.classList.add('active');
+
+    text.textContent = cycleData[key];
+    text.className = 'text-white bg-dark rounded p-3 mt-3 border border-light';
+    box.style.display = 'block';
+    box.classList.add('animate__animated','animate__fadeIn');
+    setTimeout(() => box.classList.remove('animate__fadeIn'),1000);
+  });
+ 
+  const heroNav = document.getElementById('heroNav');
+
+  window.addEventListener('scroll', () => {
+    const heroHeight = document.getElementById('hero').offsetHeight;
+    const scrolled = window.scrollY;
+
+    if (scrolled > heroHeight - 80) {
+      heroNav.classList.add('hidden');
+    } else {
+      heroNav.classList.remove('hidden');
+    }
+  });
+});
+
+</script>
+
+</body>
+</html>
